@@ -8,22 +8,19 @@ public class Main {
         String input = scanner.nextLine();
 
         input = input.toLowerCase().replaceAll("\\s+", "");
-        String reserved = "";
+        StringBuilder reserved = new StringBuilder();
 
         for (int i = input.length() - 1;i >= 0;i--){
-            reserved = reserved + input.charAt(i);
+            reserved.append(input.charAt(i));
         }
-        if (input.equals(reserved)){
+        if (input.equals(reserved.toString())){
             System.out.println("Yes this is palindrome");
         }else {
             System.out.println("This is not palindrome");
         }
         scanner.close();
 
-
-
     }
-
 
 }
 
