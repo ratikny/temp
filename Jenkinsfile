@@ -12,20 +12,16 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                // Шаг 2: Собираем Docker-образ по инструкциям из Dockerfile
-                // Имя образа будет "palindrome-app", а тег - номер сборки в Jenkins
+                // Шаг 2: Собираем Docker-образ через обычную команду терминала
                 echo 'Building the Docker image...'
-                script {
-                    docker.build("palindrome-app:${env.BUILD_NUMBER}")
-                }
+                // Имя образа будет "palindrome-app", а тег - номер сборки в Jenkins
+                sh 'docker build -t palindrome-app:${env.BUILD_NUMBER} .'
             }
         }
         stage('Run Test') {
             steps {
                 // Шаг 3: Запускаем тест!
                 echo 'Running the test...'
-                // Мы запускаем наш контейнер, через "echo" подаем ему на вход слово "level",
-                // а затем с помощью "grep" проверяем, что в выводе есть строка "This is palindrome"
                 sh "echo 'level' | docker run --rm palindrome-app:${env.BUILD_NUMBER} | grep 'This is palindrome'"
             }
         }
