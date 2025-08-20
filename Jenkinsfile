@@ -1,17 +1,18 @@
 pipeline {
-    agent any
+    // ИСПРАВЛЕНИЕ ЗДЕСЬ:
+    // Мы говорим Jenkins использовать наш Dockerfile как среду для выполнения всех шагов.
+    // Это гарантирует, что все нужные инструменты (Java, Docker) будут доступны.
+    agent {
+        dockerfile true
+    }
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Cloning the repository...'
-                checkout scm
-            }
-        }
+        // Стадия Checkout больше не нужна, так как 'agent { dockerfile true }' делает это автоматически.
+
         stage('Build Docker Image') {
             steps {
                 echo 'Building the Docker image...'
-                // ИСПРАВЛЕНИЕ ЗДЕСЬ: одинарные кавычки заменены на двойные
+                // Имя образа будет "palindrome-app", а тег - номер сборки
                 sh "docker build -t palindrome-app:${env.BUILD_NUMBER} ."
             }
         }
